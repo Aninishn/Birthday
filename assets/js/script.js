@@ -299,7 +299,12 @@
         t.classList.remove("is-active");
         const b = t.querySelector(".track__play");
         const a = t.querySelector(".track__audio");
-        if (b) b.textContent = "▶";
+        if (b)
+          b.innerHTML = `
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <polygon points="7,5 19,12 7,19"></polygon>
+  </svg>
+`;
         if (b) b.setAttribute("aria-label", "Play");
         if (a) {
           a.pause();
@@ -315,7 +320,12 @@
       }
       // Activate this track
       track.classList.add("is-active");
-      btn.textContent = "❚❚";
+      btn.innerHTML = `
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="6" y="5" width="4" height="14"></rect>
+    <rect x="14" y="5" width="4" height="14"></rect>
+  </svg>
+`;
       btn.setAttribute("aria-label", "Pause");
 
       audio.play();
