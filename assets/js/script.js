@@ -403,9 +403,21 @@
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const name = nameInput ? nameInput.value.trim() || "friend" : "friend";
-    const answer = hiddenAnswer ? hiddenAnswer.value || "maybe" : "maybe";
+    const name = nameInput ? nameInput.value.trim() : "";
+    const answer = hiddenAnswer ? hiddenAnswer.value : "";
 
+    // Name validation
+    if (!name) {
+      nameInput.focus();
+      nameInput.classList.add("error");
+      return;
+    }
+
+    // RSVP choice validation
+    if (!answer) {
+      alert("Please choose if you will come ♡");
+      return;
+    }
     /* Show confirmation with animated checkmark */
     if (confirmEl) {
       if (confirmName) confirmName.textContent = name;
