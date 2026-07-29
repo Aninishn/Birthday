@@ -431,7 +431,7 @@
       try {
         const data = await ScrapbookAPI.submitRsvp(
           name,
-          TO_SHEET_VALUE[answer]
+          TO_SHEET_VALUE[answer],
         );
 
         console.log("RSVP saved:", data);
