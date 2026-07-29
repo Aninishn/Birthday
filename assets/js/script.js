@@ -400,42 +400,46 @@
   });
 
   /* ---- Form submit ---- */
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = nameInput ? nameInput.value.trim() : "";
-    const answer = hiddenAnswer ? hiddenAnswer.value : "";
+    const name = nameInput.value.trim();
+    const answer = hiddenAnswer.value;
 
-    // Name validation
-    if (!name) {
+    // Stop empty name
+    if (name.length === 0) {
+      alert("Please enter your name ♡");
       nameInput.focus();
-      nameInput.classList.add("error");
-      return;
+      return false;
     }
 
-    // RSVP choice validation
+    // Stop empty RSVP choice
     if (!answer) {
-      alert("Please choose if you will come ♡");
-      return;
+      alert("Please choose an RSVP option ♡");
+      return false;
     }
-    /* Show confirmation with animated checkmark */
+
+    // Show confirmation
     if (confirmEl) {
-      if (confirmName) confirmName.textContent = name;
-      if (confirmMsg) confirmMsg.textContent = MESSAGES[answer];
+      confirmName.textContent = name;
+      confirmMsg.textContent = MESSAGES[answer];
       confirmEl.classList.add("is-visible");
     }
 
+    // Save to Google Sheet
     if (window.ScrapbookAPI) {
-      ScrapbookAPI.submitRsvp(name, TO_SHEET_VALUE[answer])
-        .then((data) => {
-          console.log("RSVP saved:", data);
-        })
-        .catch((err) => {
-          console.error("RSVP error:", err);
-        });
+      try {
+        const data = await ScrapbookAPI.submitRsvp(
+          name,
+          TO_SHEET_VALUE[answer]
+        );
+
+        console.log("RSVP saved:", data);
+      } catch (err) {
+        console.error("RSVP error:", err);
+      }
     }
   });
-})();
 
 /* ==============================================================
    7. HERO STICKER PARALLAX
