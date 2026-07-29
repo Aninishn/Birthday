@@ -1,219 +1,230 @@
-# Ani's Birthday — Scrapbook Invitation
+# 🎂 Ani's 21st Birthday — Digital Scrapbook Invitation
 
-A handmade-feeling, vanilla HTML/CSS/JS birthday invitation site: hero collage,
-opening envelope with confetti, countdown, photo memories, a mixtape-style
-playlist, RSVP, and (optionally) a Google-Sheet-backed guest check-in system
-for the door.
+A handmade digital birthday invitation website created for Ani's 21st birthday celebration.
 
-**No build step. No framework. No `npm install`.** Open `index.html` or serve
-the folder anywhere static.
+The project recreates the feeling of a physical scrapbook invitation through
+animated paper elements, handwritten-style typography, photo memories,
+a vintage mixtape experience, and interactive guest features.
+
+Built from scratch using vanilla HTML, CSS, and JavaScript with no frameworks
+or build tools.
+
+## ✨ Features
+
+## 🎀 Invitation Experience
+
+- 🎞️ Scrapbook-inspired landing page
+- ✉️ Interactive envelope opening animation
+- 🎉 Canvas-based confetti celebration effect
+- ⏳ Live countdown timer until the birthday event
+- 🎵 Vintage mixtape-style music section
+- 💌 RSVP invitation form
+- ✨ Handmade paper decorations and visual effects
+- 📱 Fully responsive design for desktop and mobile devices
+- 🎨 Custom typography, shadows, textures, and animations
+
+## 👥 Guest Management System (Optional)
+
+The project includes an optional guest management system powered by Google
+Apps Script and Google Sheets.
+
+Features:
+
+- 🔗 Personalized guest invitation links
+- 📝 RSVP status synchronization
+- 📋 Guest list management
+- 📊 Private admin dashboard
+- 👤 Guest information tracking
+- ✅ Event attendance management
 
 ---
 
-## Project Structure
+# 🛠 Built With
 
-```
-/
-├── index.html                     ← Public invitation (guests see this)
-│
+## Frontend
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+
+## Browser APIs
+
+- Canvas API — confetti animation
+- Intersection Observer API — scroll reveal animations
+- DOM API — interactive components and UI behavior
+
+## Backend (Optional)
+
+- Google Apps Script — serverless backend API
+- Google Sheets — lightweight guest database
+
+---
+
+# 📁 Project Structure
+
+```text
+BIRTHDAY-INVITE/
 ├── admin/
-│   ├── index.html                 ← Private guest-list dashboard
-│   └── admin.js                   ← Dashboard logic (filter, QR, stats)
-│
-├── checkin/
-│   ├── index.html                 ← QR code scan destination (at the door)
-│   └── checkin.js                 ← Check-in flow logic
-│
-├── assets/
-│   ├── css/
-│   │   └── style.css              ← All shared styling (used by every page)
-│   │
-│   ├── js/
-│   │   ├── config.js              ← ⚙️  YOUR SETTINGS GO HERE
-│   │   ├── api.js                 ← Fetch wrapper around the Apps Script API
-│   │   └── script.js              ← Invitation page interactions
-│   │
-│   ├── components/
-│   │   └── decorations.js         ← Reusable scrapbook decoration factory
-│   │
-│   ├── images/
-│   │   └── Birthday-Party-Invitation.png   ← Primary visual identity asset
-│   │
-│   └── music/                     ← Drop audio files here for real playback
+│   ├── index.html
+│   └── admin.js
 │
 ├── apps-script/
-│   └── Code.gs                    ← Google Apps Script backend (paste into GAS)
+│   └── Code.gs
 │
+├── assets/
+│   ├── audio/
+│   │   ├── ABBA - Dancing Queen.mp3
+│   │   ├── Coldplay - Adventure Of A Lifetime.mp3
+│   │   └── Taylor Swift - All Too Well.mp3
+│   │
+│   ├── components/
+│   │   └── decorations.js
+│   │
+│   ├── css/
+│   │   └── style.css
+│   │
+│   ├── images/
+│   │   └── Birthday-Party-Invitation.png
+│   │
+│   └── js/
+│       ├── api.js
+│       ├── config.js
+│       └── script.js
+│
+├── index.html
 └── README.md
 ```
 
 ---
 
-## Folder Purpose
+# 🚀 Getting Started
 
-| Folder / File | Purpose |
-|---|---|
-| `index.html` | The invitation guests receive. Works with zero configuration. |
-| `admin/` | Private dashboard for RSVP summary, guest cards, and QR codes. |
-| `checkin/` | The page a QR code opens at the door. Marks a guest as checked in. |
-| `assets/css/style.css` | Shared stylesheet — every page loads this. |
-| `assets/js/config.js` | Your API URL, admin key, and site URL. Edit this first. |
-| `assets/js/api.js` | Thin fetch wrapper. Don't edit unless the Sheet schema changes. |
-| `assets/js/script.js` | Invitation page JS: ransom headline, envelope, countdown, RSVP, etc. |
-| `assets/components/decorations.js` | Returns DOM nodes for tape, stamps, doodles, etc. Used by admin + check-in. |
-| `assets/images/` | Place approved photos and graphics here. |
-| `assets/music/` | Place audio files here if you want real playlist playback. |
-| `apps-script/Code.gs` | Backend only — paste into Google Apps Script. Never edit via this repo. |
+The invitation website works without any setup.
+
+No installation is required.
+
+Simply open:
+
+```text
+index.html
+```
+
+in any modern browser.
+
+The main invitation experience, animations, countdown,
+gallery, and visual elements work immediately.
 
 ---
 
-## Editing Assets
+# ⚙️ Configuration
 
-### Change the invitation image
-Replace `assets/images/Birthday-Party-Invitation.png` with your updated file,
-keeping the same filename. The image is referenced in `index.html`'s
-`.portrait-frame__inner img` element.
+Optional backend features require additional setup.
 
-### Add memory photos
-In `index.html`, locate the `.memories-collage` section. Replace each
-`<span>+ add photo</span>` placeholder inside a `.polaroid__pic` or
-`.frame__pic` with an `<img>` tag:
+## Google Sheets Guest Database
 
-```html
-<div class="polaroid__pic">
-  <img src="assets/images/your-photo.jpg" alt="Description of photo">
-</div>
-```
+Create a Google Sheet with the following structure:
 
-### Add music files
-Drop audio files into `assets/music/` and add `<audio>` elements to
-`index.html`. Wire them up in `assets/js/script.js` — the playlist section
-is marked with a comment explaining where to connect real playback.
+| GuestID | Name | RSVP | Guests | CheckedIn | CheckedInTime |
+| ------- | ---- | ---- | ------ | --------- | ------------- |
 
-### Change the party details
-Everything is in `index.html` directly — date, time, location, dress code, and
-the countdown target date (also in `assets/js/script.js` as `TARGET_DATE`).
+Example:
+
+| GuestID | Name | RSVP    | Guests |
+| ------- | ---- | ------- | ------ |
+| G001    | Nino | Pending | 1      |
+| G002    | Luka | Pending | 2      |
 
 ---
 
-## Where Shared Code Lives
+## Google Apps Script Setup
 
-| Concern | File |
-|---|---|
-| Design tokens (colours, fonts, shadows) | `assets/css/style.css` — `:root` block |
-| API communication | `assets/js/api.js` |
-| Configuration | `assets/js/config.js` |
-| Scrapbook decoration utilities | `assets/components/decorations.js` |
+1. Open the Google Sheet.
+
+2. Go to:
+
+```text
+Extensions → Apps Script
+```
+
+3. Replace the default code with:
+
+```text
+apps-script/Code.gs
+```
+
+4. Configure your admin key:
+
+```javascript
+var ADMIN_KEY = "CHANGE_ME_SECRET";
+```
+
+5. Deploy as a Web App.
+
+Configuration:
+
+```text
+Execute as:
+Me
+
+Who has access:
+Anyone
+```
 
 ---
 
-## Where Feature-Specific Code Lives
+## Frontend Configuration
 
-| Feature | HTML | JS |
-|---|---|---|
-| Invitation page | `index.html` | `assets/js/script.js` |
-| Admin dashboard | `admin/index.html` | `admin/admin.js` |
-| Guest check-in | `checkin/index.html` | `checkin/checkin.js` |
-| Backend (Sheet) | — | `apps-script/Code.gs` |
+Update:
 
----
-
-## Part 1 — The Invitation (works with zero setup)
-
-Open `index.html` in a browser. The hero, envelope, countdown, memories,
-playlist, and RSVP form all work with no configuration. RSVP without a
-`?guest=` link is local-only (shows a confirmation, doesn't save anywhere).
-
----
-
-## Part 2 — Guest List Backend (needed for RSVP-sync + QR check-in)
-
-This uses a Google Sheet as the database and Google Apps Script as the API.
-No server to host. No npm packages.
-
-### 1. Create the Sheet
-
-Make a new Google Sheet. Rename the first tab to exactly `Guests`. Row 1
-must have exactly these headers:
-
-```
-GuestID | Name | RSVP | Guests | CheckedIn | CheckedInTime
+```text
+assets/js/config.js
 ```
 
-One row per guest:
+with your settings:
 
-```
-G001 | Nino  | Pending | 1 |  |
-G002 | Luka  | Pending | 2 |  |
-```
-
-- **GuestID** — anything unique and short. Goes in each guest's personal URL.
-- **RSVP** — starts as `Pending`; becomes `Accepted` or `Declined` when they respond.
-- **Guests** — how many people the invite covers (them + any +1s).
-- **CheckedIn / CheckedInTime** — leave blank; the script fills these at the door.
-
-### 2. Add the backend
-
-In the Sheet: **Extensions → Apps Script**. Delete the placeholder code, paste
-the entire contents of `apps-script/Code.gs`.
-
-Change the admin key at the top:
-
-```js
-var ADMIN_KEY = 'CHANGE_ME_SECRET';
-```
-
-### 3. Deploy
-
-**Deploy → New deployment → type: Web app.**
-- Execute as: **Me**
-- Who has access: **Anyone**
-
-Authorize when asked, then copy the **Web App URL**.
-
-### 4. Configure
-
-Open `assets/js/config.js` and fill in:
-
-```js
+```javascript
 window.SCRAPBOOK_CONFIG = {
-  APPS_SCRIPT_URL: "<the Web App URL>",
-  ADMIN_KEY:       "<the same secret from Code.gs>",
-  SITE_URL:        "<where you host this folder, no trailing slash>"
+  APPS_SCRIPT_URL: "YOUR_WEB_APP_URL",
+  ADMIN_KEY: "YOUR_SECRET_KEY",
+  SITE_URL: "YOUR_WEBSITE_URL",
 };
 ```
 
-### 5. Host
-
-Any static host — GitHub Pages, Netlify, Vercel, etc. QR codes must point at
-a real public URL, so `SITE_URL` must match where you deploy.
-
 ---
 
-## Part 3 — Personalized Guest Links
+## 🎵 Music Section
 
-- **RSVP link** to send each guest: `yoursite.com/?guest=G001`
-  — prefills their name and syncs their RSVP to the Sheet.
-- **Check-in QR**: generated automatically on `/admin/`, points at
-  `yoursite.com/checkin/?guest=G001`.
+The invitation includes a vintage mixtape-style playlist experience.
 
----
+Audio files are stored inside:
 
-## Part 4 — At the Door
+```text
+assets/audio/
+```
 
-Open `/admin/` on your phone, unlock with your admin key. Scroll to "Check-in
-QR codes" and either print them ahead of time or let guests scan straight off
-your screen. Scanning opens `/checkin/`, which shows their name + RSVP + party
-size and a **Check In** button. Tapping it updates the Sheet instantly.
+The playlist interface can be connected to real audio playback through:
 
----
+```text
+assets/js/script.js
+```
 
-## Honest Limits
+## 🎀 Design Concept
 
-- **The admin key is not real security.** It's checked in Apps Script, but the
-  key lives in `assets/js/config.js`, a public file on your hosted site. Fine
-  for a private one-day event; don't use for anything sensitive.
-- **No personal data goes in the QR code** — it only encodes the `GuestID`.
-  All actual guest info stays in the Sheet.
-- **Google Apps Script has light rate limits** and can be briefly slow on the
-  first request of the day — totally fine for a private party, not for scale.
+The website follows a vintage scrapbook aesthetic inspired by:
+
+- physical birthday cards
+- photo albums
+- handwritten memories
+- nostalgic cassette tapes
+
+The goal was to create an invitation that feels personal and emotional
+rather than a traditional event website.
+
+Every section was designed to feel like a handmade birthday card brought
+to life through web technologies and animations.
+
+## 💌 Created For
+
+**Ani's 21st Birthday Celebration**
+
+📅 August 3, 2026
