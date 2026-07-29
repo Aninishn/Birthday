@@ -386,14 +386,14 @@
       confirmEl.classList.add("is-visible");
     }
 
-    /* Sync to Sheet when a guest ID is present */
-    if (guestId && window.ScrapbookAPI) {
-      ScrapbookAPI.setRsvp(guestId, TO_SHEET_VALUE[answer]).catch(() => {
-        if (confirmMsg) {
-          confirmMsg.textContent +=
-            " (couldn't reach the guest list — try again in a bit)";
-        }
-      });
+    if (window.ScrapbookAPI) {
+      ScrapbookAPI.submitRsvp(name, TO_SHEET_VALUE[answer])
+        .then((data) => {
+          console.log("RSVP saved:", data);
+        })
+        .catch((err) => {
+          console.error("RSVP error:", err);
+        });
     }
   });
 })();

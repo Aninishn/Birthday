@@ -20,15 +20,17 @@
    * @returns {Promise<any>}
    */
   async function call(params) {
-    if (!cfg.APPS_SCRIPT_URL || cfg.APPS_SCRIPT_URL.startsWith('PASTE_')) {
-      throw new Error('Set APPS_SCRIPT_URL in assets/js/config.js first — see README.md.');
+    if (!cfg.APPS_SCRIPT_URL || cfg.APPS_SCRIPT_URL.startsWith("PASTE_")) {
+      throw new Error(
+        "Set APPS_SCRIPT_URL in assets/js/config.js first — see README.md.",
+      );
     }
 
     const url = new URL(cfg.APPS_SCRIPT_URL);
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
     const res = await fetch(url.toString());
-    if (!res.ok) throw new Error('Request failed: ' + res.status);
+    if (!res.ok) throw new Error("Request failed: " + res.status);
 
     const data = await res.json();
     if (data && data.error) throw new Error(data.error);
@@ -36,25 +38,28 @@
   }
 
   /** Public API surface */
+  /** Public API surface */
   global.ScrapbookAPI = {
-    /** Fetch a single guest record by GuestID. */
-    getGuest(guestId) {
-      return call({ action: 'get', guest: guestId });
-    },
-
     /** List all guests — requires a valid admin key. */
     listGuests() {
-      return call({ action: 'list', key: cfg.ADMIN_KEY });
+      return call({ action: "list", key: cfg.ADMIN_KEY });
     },
 
-    /** Update a guest's RSVP status (Accepted / Declined / Pending). */
-    setRsvp(guestId, value) {
-      return call({ action: 'rsvp', guest: guestId, value });
+    /** Submit a new RSVP from any visitor. */
+    submitRsvp(name, value) {
+      return call({
+        action: "rsvp",
+        name: name,
+        value: value,
+      });
     },
 
-    /** Mark a guest as checked-in and timestamp the event. */
+    /** Mark a guest as checked-in (future use). */
     checkIn(guestId) {
-      return call({ action: 'checkin', guest: guestId });
-    }
+      return call({
+        action: "checkin",
+        guest: guestId,
+      });
+    },
   };
 })(window);
