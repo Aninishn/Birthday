@@ -1,0 +1,2154 @@
+/* ==============================================================
+   STYLE.CSS — Ani's Birthday Scrapbook Invitation
+   --------------------------------------------------------------
+   Table of Contents
+   1.  Design Tokens
+   2.  Reset & Base
+   3.  Shared — eyebrow / section-title / reveal
+   4.  Shared — tape strips
+   5.  Shared — stickers & decorative elements
+   6.  Shared — disco ball
+   7.  Shared — postage stamp
+   8.  Hero
+   9.  Envelope
+   10. Countdown
+   11. Memories / Gallery
+   12. Playlist / Cassette
+   13. RSVP Postcard
+   14. Footer
+   15. Check-in Page
+   16. Admin Dashboard
+   17. Decoration System (used by decorations.js)
+   18. Responsive
+   19. Reduced-Motion
+   20. Print
+   ============================================================== */
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* — Colour palette — */
+  --cream: #f7f1e6;
+  --paper: #fbf6ec;
+  --paper-dark: #efe6d4;
+  --dusty-pink: #e3afc0;
+  --dusty-pink-lt: #f0d2db;
+  --cherry: #b0273b;
+  --cherry-dark: #8f1c2c;
+  --burgundy: #5a1b28;
+  --brown: #7c6552;
+  --silver: #c9c9c6;
+  --ink: #2a2320;
+
+  /* — Typography — */
+  --font-display: "Fraunces", serif;
+  --font-hand: "Caveat", cursive;
+  --font-type: "Special Elite", monospace;
+  --font-cut: "Anton", sans-serif;
+
+  /* — Shadows — */
+  --shadow-soft: 0 10px 30px rgba(42, 35, 32, 0.14);
+  --shadow-tight: 0 3px 10px rgba(42, 35, 32, 0.18);
+  --shadow-deep:
+    0 18px 48px rgba(42, 35, 32, 0.18), 0 4px 12px rgba(42, 35, 32, 0.12);
+
+  /* — Transitions — */
+  --ease-snappy: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Scroll padding prevents section headers hiding under sticky elements */
+  scroll-padding-top: 1rem;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-display);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global focus style — visible ring on keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--cherry);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Film-grain overlay — fixed, full screen */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 120px 120px;
+}
+
+/* Subtle paper-texture vignette on all major sections */
+.hero,
+.envelope-section,
+.countdown-section,
+.memories-section,
+.playlist-section,
+.rsvp-section,
+.footer {
+  position: relative;
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(92, 26, 38, 0.035) 0,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(92, 26, 38, 0.03) 0,
+      transparent 40%
+    );
+}
+
+/* ============================================================
+   3. SHARED — Eyebrow / Section title / Scroll reveal
+   ============================================================ */
+.eyebrow {
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brown);
+  text-align: center;
+  margin: 0 0 0.6rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 450;
+  font-size: clamp(1.8rem, 4.5vw, 2.9rem);
+  text-align: center;
+  margin: 0 0 3rem;
+  color: var(--burgundy);
+  position: relative;
+}
+
+/* Decorative rule under every section title */
+.section-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 2px;
+  background: var(--dusty-pink);
+  margin: 0.9rem auto 0;
+  border-radius: 2px;
+}
+
+/* Scroll-triggered fade-in reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   4. SHARED — Washi tape strips
+   ============================================================ */
+.tape {
+  position: absolute;
+  width: 110px;
+  height: 34px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(227, 175, 192, 0.75) 0 8px,
+    rgba(227, 175, 192, 0.55) 8px 16px
+  );
+  opacity: 0.85;
+  box-shadow: var(--shadow-tight);
+  z-index: 3;
+}
+
+.tape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.tape--1 {
+  top: 6%;
+  left: 8%;
+  transform: rotate(-11deg);
+}
+.tape--2 {
+  top: 3%;
+  right: 10%;
+  transform: rotate(9deg);
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(201, 201, 198, 0.7) 0 8px,
+    rgba(201, 201, 198, 0.5) 8px 16px
+  );
+}
+.tape--3 {
+  top: -14px;
+  left: calc(50% - 55px);
+  transform: rotate(-4deg);
+}
+.tape--4 {
+  top: -14px;
+  right: 12%;
+  transform: rotate(6deg);
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(176, 39, 59, 0.35) 0 8px,
+    rgba(176, 39, 59, 0.2) 8px 16px
+  );
+}
+
+/* ============================================================
+   5. SHARED — Floating stickers
+   ============================================================ */
+.sticker {
+  position: absolute;
+  z-index: 4;
+  filter: drop-shadow(0 6px 10px rgba(42, 35, 32, 0.18));
+}
+
+.sticker--float {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(var(--px, 0px), var(--py, 0px))
+      rotate(var(--rot, 0deg));
+  }
+  50% {
+    transform: translate(var(--px, 0px), calc(var(--py, 0px) - 14px))
+      rotate(calc(var(--rot, 0deg) + 3deg));
+  }
+}
+
+.sticker--star {
+  top: 16%;
+  left: 6%;
+  font-size: 2.1rem;
+  color: var(--dusty-pink);
+  --rot: -6deg;
+}
+.sticker--star2 {
+  bottom: 22%;
+  left: 12%;
+  font-size: 1.4rem;
+  color: var(--cherry);
+  --rot: 8deg;
+}
+.sticker--heart {
+  top: 60%;
+  right: 8%;
+  font-size: 2rem;
+  color: var(--cherry);
+  --rot: -4deg;
+}
+.sticker--cherry {
+  top: 12%;
+  right: 16%;
+  --rot: 10deg;
+}
+.sticker--bow {
+  bottom: 14%;
+  right: 8%;
+  --rot: -8deg;
+}
+.sticker--stamp {
+  top: 8%;
+  left: calc(50% + 150px);
+}
+
+/* ============================================================
+   6. SHARED — Disco ball (pure CSS)
+   ============================================================ */
+.disco-ball {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 0deg,
+      #d7d7d6 0 10deg,
+      #b7b7b5 10deg 20deg,
+      #e9e9e8 20deg 30deg,
+      #a3a3a1 30deg 40deg,
+      #d7d7d6 40deg 50deg,
+      #b7b7b5 50deg 60deg,
+      #e9e9e8 60deg 70deg,
+      #a3a3a1 70deg 80deg,
+      #d7d7d6 80deg 90deg,
+      #b7b7b5 90deg 100deg,
+      #e9e9e8 100deg 110deg,
+      #a3a3a1 110deg 120deg,
+      #d7d7d6 120deg 130deg,
+      #b7b7b5 130deg 140deg,
+      #e9e9e8 140deg 150deg,
+      #a3a3a1 150deg 160deg,
+      #d7d7d6 160deg 170deg,
+      #b7b7b5 170deg 180deg,
+      #e9e9e8 180deg 190deg,
+      #a3a3a1 190deg 200deg,
+      #d7d7d6 200deg 210deg,
+      #b7b7b5 210deg 220deg,
+      #e9e9e8 220deg 230deg,
+      #a3a3a1 230deg 240deg,
+      #d7d7d6 240deg 250deg,
+      #b7b7b5 250deg 260deg,
+      #e9e9e8 260deg 270deg,
+      #a3a3a1 270deg 280deg,
+      #d7d7d6 280deg 290deg,
+      #b7b7b5 290deg 300deg,
+      #e9e9e8 300deg 310deg,
+      #a3a3a1 310deg 320deg,
+      #d7d7d6 320deg 330deg,
+      #b7b7b5 330deg 340deg,
+      #e9e9e8 340deg 350deg,
+      #a3a3a1 350deg 360deg
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 6px,
+      rgba(0, 0, 0, 0.18) 6px 7px
+    );
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.35),
+    inset 0 0 10px rgba(0, 0, 0, 0.3);
+  animation: spin 7s linear infinite;
+  position: relative;
+}
+
+.disco-ball__shine {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 14px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  filter: blur(2px);
+}
+
+.disco-string {
+  width: 2px;
+  height: 34px;
+  background: var(--brown);
+  margin: 0 auto;
+}
+
+.sticker--disco {
+  top: -30px;
+  left: calc(50% - 28px);
+  text-align: center;
+}
+.sticker--disco.sticker--small .disco-ball {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   7. SHARED — Postage stamp
+   ============================================================ */
+.stamp {
+  width: 64px;
+  height: 64px;
+  background: var(--paper);
+  border: 2px dashed var(--brown);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-type);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  color: var(--cherry-dark);
+  transform: rotate(6deg);
+  position: relative;
+  box-shadow: var(--shadow-tight);
+}
+
+.stamp__star {
+  position: absolute;
+  bottom: 4px;
+  font-size: 0.7rem;
+  color: var(--dusty-pink);
+}
+.stamp--sm {
+  width: 52px;
+  height: 52px;
+}
+
+/* ============================================================
+   8. HERO
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem 3rem;
+  text-align: center;
+  background: var(--cream);
+  border-bottom: 1px solid rgba(92, 26, 38, 0.08);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  width: 100%;
+}
+
+.eyebrow--hero {
+  margin-bottom: 1.4rem;
+}
+
+/* Ransom-note headline — each character is a .rletter span built by JS */
+.ransom {
+  margin: 0 0 2.2rem;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  gap: 0.15em 0.05em;
+}
+
+.rletter {
+  display: inline-block;
+  font-size: clamp(2.4rem, 9vw, 5.2rem);
+  padding: 0.05em 0.12em;
+  line-height: 1;
+  transform: rotate(var(--r, 0deg));
+  box-shadow: var(--shadow-tight);
+}
+
+.rletter--cut {
+  font-family: var(--font-cut);
+  background: var(--paper);
+  color: var(--ink);
+}
+.rletter--serif {
+  font-family: var(--font-display);
+  background: var(--dusty-pink-lt);
+  color: var(--burgundy);
+  font-style: italic;
+  font-weight: 600;
+}
+.rletter--type {
+  font-family: var(--font-type);
+  background: var(--ink);
+  color: var(--paper);
+}
+.rletter--space {
+  width: 0.4em;
+  box-shadow: none;
+}
+
+/* Portrait / photo frame */
+.portrait-frame {
+  width: min(260px, 70vw);
+  aspect-ratio: 4 / 5;
+  margin: 0 auto 1.6rem;
+  position: relative;
+  background: var(--paper);
+  padding: 14px 14px 34px;
+  box-shadow: var(--shadow-deep);
+  transform: rotate(-2deg);
+}
+
+.portrait-frame__inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--paper-dark), var(--silver) 120%);
+  border: 1px solid rgba(42, 35, 32, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  clip-path: polygon(
+    0% 2%,
+    3% 0%,
+    97% 1%,
+    100% 4%,
+    99% 96%,
+    96% 100%,
+    2% 99%,
+    0% 97%
+  );
+}
+
+/* When a photo is placed inside, it fills the frame naturally */
+.portrait-frame__inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.portrait-frame__label {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--brown);
+  opacity: 0.75;
+  transform: rotate(-3deg);
+}
+
+.portrait-frame__corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--cherry);
+  opacity: 0.55;
+}
+.portrait-frame__corner.tl {
+  top: 4px;
+  left: 4px;
+  border-right: none;
+  border-bottom: none;
+}
+.portrait-frame__corner.br {
+  bottom: 26px;
+  right: 4px;
+  border-left: none;
+  border-top: none;
+}
+
+.washi--frame {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 45px);
+  width: 90px;
+  height: 24px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(176, 39, 59, 0.55) 0 7px,
+    rgba(176, 39, 59, 0.35) 7px 14px
+  );
+  transform: rotate(-5deg);
+  box-shadow: var(--shadow-tight);
+}
+
+.hero__subtitle {
+  font-family: var(--font-hand);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--cherry);
+  margin: 0 0 0.4rem;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+.hero__hand {
+  font-family: var(--font-hand);
+  font-size: 1.2rem;
+  color: var(--brown);
+  margin: 0;
+}
+
+/* Animated scroll cue */
+.scrollcue {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-type);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brown);
+  opacity: 0.7;
+}
+
+.scrollcue__line {
+  width: 1px;
+  height: 34px;
+  background: var(--brown);
+  animation: pulseline 2s ease-in-out infinite;
+}
+
+@keyframes pulseline {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   9. ENVELOPE
+   ============================================================ */
+.envelope-section {
+  padding: 6rem 1.5rem 7rem;
+  background: var(--paper);
+}
+
+.envelope-wrap {
+  position: relative;
+  width: min(480px, 90vw);
+  margin: 0 auto;
+  perspective: 1600px;
+}
+
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  cursor: pointer;
+}
+
+.envelope__back {
+  position: absolute;
+  inset: 0;
+  background: var(--paper-dark);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(42, 35, 32, 0.1);
+}
+
+.envelope__left,
+.envelope__right {
+  position: absolute;
+  top: 0;
+  width: 52%;
+  height: 100%;
+  background: linear-gradient(135deg, #e9dfcb, #ded2b8);
+  z-index: 2;
+}
+
+.envelope__left {
+  left: 0;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+}
+.envelope__right {
+  right: 0;
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+}
+
+.envelope__front {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 64%;
+  background: var(--paper-dark);
+  z-index: 3;
+  box-shadow: 0 -1px 0 rgba(42, 35, 32, 0.08);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 50% 34%, 0 0);
+}
+
+.envelope__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(160deg, #ede3cf, #e1d5bc);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 6;
+  box-shadow: 0 2px 6px rgba(42, 35, 32, 0.12);
+}
+
+.envelope__seal {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--cherry);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-hand);
+  font-size: 1.05rem;
+  box-shadow: 0 6px 14px rgba(90, 26, 38, 0.4);
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+}
+
+.envelope:hover .envelope__seal {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+/* Invitation card — slides out when envelope opens */
+.card {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 5%;
+  background: var(--cream);
+  padding: 1.8rem 1.6rem 1.6rem;
+  box-shadow: var(--shadow-soft);
+  z-index: 1;
+  transform: translateY(2%);
+  transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1px solid rgba(42, 35, 32, 0.08);
+}
+
+.card__tape {
+  position: absolute;
+  top: -14px;
+  left: calc(50% - 40px);
+  width: 80px;
+  height: 12px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(201, 201, 198, 0.75) 0 7px,
+    rgba(201, 201, 198, 0.5) 7px 14px
+  );
+  transform: rotate(-3deg);
+}
+
+.card__kicker {
+  font-family: var(--font-type);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brown);
+  margin: 0.2rem 0;
+  text-align: center;
+}
+.card__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.7rem;
+  color: var(--burgundy);
+  text-align: center;
+  margin: 0 0 1rem;
+}
+.card__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed rgba(92, 26, 38, 0.2);
+  font-size: 0.92rem;
+}
+.card__row--rsvp {
+  border-bottom: none;
+}
+.card__label {
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+.card__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}
+.card__ps {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: var(--cherry);
+  text-align: center;
+  margin: 1rem 0 0;
+}
+
+/* Open state — flap flips, seal disappears, card rises */
+.envelope.is-open .envelope__flap {
+  transform: rotateX(180deg);
+}
+.envelope.is-open .envelope__seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+}
+.envelope.is-open .card {
+  transform: translateY(-75%);
+  z-index: 7;
+}
+
+/* ============================================================
+   10. COUNTDOWN
+   ============================================================ */
+.countdown-section {
+  padding: 6rem 1.5rem 7rem;
+  background: var(--cream);
+}
+
+.countdown-page {
+  position: relative;
+  width: min(560px, 92vw);
+  margin: 0 auto;
+  background: var(--paper);
+  padding: 2.6rem 2rem 2.4rem;
+  box-shadow: var(--shadow-deep);
+  transform: rotate(-1deg);
+}
+
+/* Spiral binding holes along the top */
+.countdown-page__spiral {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.countdown-page__spiral span {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--silver);
+}
+
+.countdown-page__month {
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  color: var(--cherry);
+  text-align: left;
+  margin-bottom: 1.6rem;
+  border-bottom: 2px solid var(--ink);
+  display: inline-block;
+  padding-bottom: 0.2rem;
+}
+
+/* Four countdown cells in a row */
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.countdown-cell {
+  background: var(--cream);
+  border: 1px dashed rgba(92, 26, 38, 0.3);
+  border-radius: 4px;
+  padding: 1.2rem 0.4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: inset 0 2px 6px rgba(42, 35, 32, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.countdown-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: var(--burgundy);
+  letter-spacing: -0.02em;
+}
+.countdown-label {
+  font-family: var(--font-type);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.countdown-page__sticker {
+  position: absolute;
+  bottom: -18px;
+  right: 14px;
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  color: var(--cherry);
+  transform: rotate(-6deg);
+}
+
+/* ============================================================
+   11. MEMORIES / GALLERY
+   ============================================================ */
+.memories-section {
+  padding: 6rem 1.5rem 7rem;
+  background: var(--paper);
+}
+
+.memories-collage {
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.6rem 1.2rem;
+  padding: 1rem;
+}
+
+.polaroid,
+.frame {
+  background: var(--cream);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.35s var(--ease-snappy),
+    box-shadow 0.35s ease;
+}
+
+/* Polaroid-style photo card */
+.polaroid {
+  padding: 0.7rem 0.7rem 1.6rem;
+}
+
+.polaroid__pic,
+.frame__pic {
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, var(--paper-dark), var(--dusty-pink-lt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-hand);
+  color: var(--brown);
+  font-size: 1.05rem;
+  border: 1px solid rgba(42, 35, 32, 0.1);
+  overflow: hidden;
+}
+
+/* Photos inside polaroids fill naturally */
+.polaroid__pic img,
+.frame__pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Framed (mat board) style */
+.frame {
+  padding: 10px;
+  border: 6px solid var(--paper);
+  outline: 1px solid rgba(42, 35, 32, 0.12);
+}
+
+.polaroid__cap {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: var(--cherry);
+  text-align: center;
+  margin: 0.65rem 0 0;
+  line-height: 1.2;
+}
+
+/* Hover lifts and straightens each photo */
+.polaroid:hover,
+.frame:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+  box-shadow: var(--shadow-deep);
+  z-index: 5;
+}
+
+/* Grid placement — each photo has a unique rotation and offset */
+.p1 {
+  grid-column: 1 / 3;
+  transform: rotate(-4deg);
+  margin-top: 1rem;
+}
+.p2 {
+  grid-column: 3 / 5;
+  transform: rotate(3deg);
+}
+.p3 {
+  grid-column: 5 / 7;
+  transform: rotate(-2deg);
+  margin-top: 2rem;
+}
+.p4 {
+  grid-column: 2 / 4;
+  transform: rotate(5deg);
+  margin-top: 1.5rem;
+}
+.p5 {
+  grid-column: 4 / 6;
+  transform: rotate(-3deg);
+}
+.p6 {
+  grid-column: 1 / 3;
+  grid-row: 3;
+  transform: rotate(2deg);
+  margin-top: 0.5rem;
+}
+
+/* Decorative inline stickers in the gallery */
+.sticker-inline {
+  position: absolute;
+  font-size: 2rem;
+  z-index: 1;
+}
+.sticker-inline--heart {
+  top: 0;
+  right: 4%;
+  color: var(--cherry);
+  transform: rotate(8deg);
+}
+.sticker-inline--star {
+  bottom: -6%;
+  left: 2%;
+  color: var(--dusty-pink);
+  transform: rotate(-10deg);
+}
+
+/* ============================================================
+   12. PLAYLIST / CASSETTE
+   ============================================================ */
+.playlist-section {
+  padding: 6rem 1.5rem 7rem;
+  background: var(--cream);
+}
+
+.cassette {
+  width: min(340px, 82vw);
+  margin: 0 auto 2.6rem;
+}
+
+.cassette__body {
+  position: relative;
+  background: linear-gradient(160deg, #efe6d4, #ded2b8);
+  border-radius: 14px;
+  padding: 1.4rem 1.4rem 1.1rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.cassette__label {
+  background: var(--cream);
+  border: 1px solid rgba(42, 35, 32, 0.15);
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cassette__label-title {
+  font-family: var(--font-cut);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  color: var(--cherry-dark);
+}
+.cassette__label-sub {
+  font-family: var(--font-type);
+  font-size: 0.6rem;
+  color: var(--brown);
+  letter-spacing: 0.08em;
+}
+
+.cassette__reels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.4rem;
+}
+
+.reel {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--ink) 0 8px,
+    var(--paper) 9px 11px,
+    var(--ink) 12px 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reel__hub {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+/* Reels spin when a track is active */
+.cassette.is-playing .reel {
+  animation: reelspin 1.6s linear infinite;
+}
+@keyframes reelspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cassette__screws {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.9rem 0.2rem 0;
+}
+.cassette__screws span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(42, 35, 32, 0.35);
+}
+
+/* Track list */
+.tracklist {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto 2.4rem;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 0.9rem;
+  margin-bottom: 0.6rem;
+  background: var(--paper);
+  border: 1px solid rgba(42, 35, 32, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.track:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-tight);
+  background: var(--dusty-pink-lt);
+}
+
+.track__num {
+  font-family: var(--font-type);
+  color: var(--brown);
+  font-size: 0.85rem;
+}
+.track__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+.track__time {
+  font-family: var(--font-type);
+  font-size: 0.82rem;
+  color: var(--brown);
+}
+
+.track__play {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 1px solid var(--cherry);
+  background: transparent;
+  color: var(--cherry);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.track__play:hover,
+.track.is-active .track__play {
+  background: var(--cherry);
+  color: var(--paper);
+}
+
+.track.is-active {
+  background: var(--dusty-pink-lt);
+}
+
+/* ============================================================
+   13. RSVP POSTCARD
+   ============================================================ */
+.rsvp-section {
+  padding: 6rem 1.5rem 7rem;
+  background: var(--paper);
+}
+
+.postcard {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--cream);
+  padding: 2.6rem 2rem 2.2rem;
+  box-shadow: var(--shadow-deep);
+  transform: rotate(1deg);
+}
+
+/* Perforated top edge */
+.postcard__perf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-image: radial-gradient(
+    circle,
+    var(--paper) 3px,
+    transparent 3.5px
+  );
+  background-size: 16px 10px;
+  background-position: 0 -4px;
+}
+
+.postcard__stamp {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+}
+
+/* Form fields */
+.field {
+  display: block;
+  margin-bottom: 1.4rem;
+}
+
+.field__label {
+  display: block;
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown);
+  margin-bottom: 0.5rem;
+}
+
+.field__label--standalone {
+  margin-top: 0.4rem;
+}
+
+.field input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px dashed var(--brown);
+  background: transparent;
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  color: var(--ink);
+  padding: 0.2rem 0;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.field input:focus {
+  border-bottom-color: var(--cherry);
+}
+
+/* RSVP choice buttons */
+.rsvp-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 1.8rem;
+}
+
+.rsvp-sticker {
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  padding: 0.55rem 1rem;
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  border-radius: 40% 60% 55% 45% / 55% 45% 60% 40%;
+  box-shadow: var(--shadow-tight);
+  transform: rotate(-2deg);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.rsvp-sticker:nth-child(2) {
+  transform: rotate(2deg);
+}
+.rsvp-sticker:nth-child(3) {
+  transform: rotate(-1deg);
+}
+
+.rsvp-sticker:hover {
+  transform: scale(1.08) rotate(0deg);
+  box-shadow: var(--shadow-soft);
+}
+
+.rsvp-sticker.is-selected {
+  background: var(--cherry);
+  color: var(--paper);
+  border-color: var(--cherry);
+}
+.rsvp-sticker--no.is-selected {
+  background: var(--brown);
+  color: var(--paper);
+  border-color: var(--brown);
+}
+.rsvp-sticker--maybe.is-selected {
+  background: var(--dusty-pink);
+  color: var(--ink);
+  border-color: var(--dusty-pink);
+}
+
+/* Submit button */
+.postcard__submit {
+  display: block;
+  width: 100%;
+  background: var(--burgundy);
+  color: var(--paper);
+  border: none;
+  padding: 1rem;
+  font-family: var(--font-type);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-tight);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.postcard__submit:hover {
+  background: var(--cherry);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Confirmation message — expands after successful submit */
+.postcard__confirm {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.6s ease,
+    opacity 0.6s ease,
+    margin 0.6s ease;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--cherry);
+}
+
+.postcard__confirm.is-visible {
+  max-height: 160px;
+  opacity: 1;
+  margin-top: 1.4rem;
+}
+
+/* Animated checkmark displayed inside confirm on success */
+.confirm__check {
+  display: block;
+  font-size: 2.2rem;
+  animation: popIn 0.4s var(--ease-snappy) both;
+  margin-bottom: 0.3rem;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0) rotate(-15deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   14. FOOTER
+   ============================================================ */
+.footer {
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+  background: var(--burgundy);
+  color: var(--paper);
+}
+
+.footer__hand {
+  font-family: var(--font-hand);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin: 1.2rem 0 0.2rem;
+}
+.footer__heart {
+  color: var(--dusty-pink);
+  font-size: 1.4rem;
+  margin: 0 0 1.4rem;
+}
+.footer__fine {
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   15. CHECK-IN PAGE
+   ============================================================ */
+.checkin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.2rem;
+  background: var(--cream);
+}
+
+.checkin-card {
+  position: relative;
+  width: min(420px, 92vw);
+  background: var(--paper);
+  padding: 2.6rem 2rem 2.2rem;
+  box-shadow: var(--shadow-deep);
+  transform: rotate(-1deg);
+}
+
+.checkin-card__eyebrow {
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brown);
+  text-align: center;
+  margin: 0 0 0.6rem;
+}
+
+.checkin-card__name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  color: var(--burgundy);
+  text-align: center;
+  margin: 0 0 1.4rem;
+  line-height: 1.1;
+}
+
+.checkin-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed rgba(92, 26, 38, 0.2);
+  font-size: 0.92rem;
+}
+
+.checkin-row__label {
+  font-family: var(--font-type);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+.checkin-row__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+/* RSVP status badge */
+.checkin-status {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  font-family: var(--font-type);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.checkin-status--accepted {
+  background: var(--dusty-pink-lt);
+  color: var(--burgundy);
+}
+.checkin-status--declined {
+  background: var(--paper-dark);
+  color: var(--brown);
+}
+.checkin-status--pending {
+  background: var(--silver);
+  color: var(--ink);
+}
+
+/* Primary check-in button */
+.checkin-button {
+  display: block;
+  width: 100%;
+  margin-top: 1.8rem;
+  background: var(--burgundy);
+  color: var(--paper);
+  border: none;
+  padding: 1.1rem;
+  font-family: var(--font-type);
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-tight);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.checkin-button:hover:not(:disabled) {
+  background: var(--cherry);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.checkin-button:disabled {
+  background: var(--silver);
+  color: var(--brown);
+  cursor: default;
+  transform: none;
+}
+
+/* Confirmation message after check-in */
+.checkin-message {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--cherry);
+  text-align: center;
+  margin-top: 1.2rem;
+  animation: popIn 0.4s var(--ease-snappy) both;
+}
+
+.checkin-error {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--brown);
+  text-align: center;
+}
+
+/* Success animation wrapper */
+.checkin-success {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+
+.checkin-success__mark {
+  font-size: 3.2rem;
+  display: block;
+  animation: popIn 0.5s var(--ease-snappy) both;
+  margin-bottom: 0.4rem;
+}
+
+.checkin-success__text {
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  color: var(--cherry);
+}
+
+.checkin-success__time {
+  font-family: var(--font-type);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--brown);
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+/* ============================================================
+   16. ADMIN DASHBOARD
+   ============================================================ */
+.admin-page {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 4rem 1.2rem 6rem;
+}
+
+/* Login gate card */
+.admin-gate {
+  max-width: 360px;
+  margin: 6rem auto;
+  background: var(--cream);
+  padding: 2.2rem 1.8rem;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  transform: rotate(-1deg);
+}
+
+.admin-gate input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px dashed var(--brown);
+  background: transparent;
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 0.5rem 0;
+  outline: none;
+  margin: 1rem 0;
+}
+
+.admin-gate input:focus {
+  border-bottom-color: var(--cherry);
+}
+
+.admin-gate__prompt {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--burgundy);
+  margin: 0.4rem 0 0.8rem;
+}
+
+/* Dashboard header */
+.admin-header {
+  text-align: center;
+  margin-bottom: 2.6rem;
+}
+
+/* Summary stat cards */
+.admin-summary {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.8rem;
+}
+
+.admin-summary__card {
+  background: var(--cream);
+  padding: 1.1rem 1.5rem;
+  box-shadow: var(--shadow-tight);
+  text-align: center;
+  min-width: 110px;
+  transform: rotate(-1deg);
+  transition: transform 0.2s ease;
+}
+
+.admin-summary__card:nth-child(even) {
+  transform: rotate(1deg);
+}
+.admin-summary__card:hover {
+  transform: rotate(0) scale(1.03);
+}
+
+.admin-summary__num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--burgundy);
+  display: block;
+}
+.admin-summary__label {
+  font-family: var(--font-type);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+/* Filter toolbar */
+.admin-filters {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.6rem;
+}
+
+.filter-btn {
+  font-family: var(--font-type);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown);
+  background: var(--cream);
+  border: 1px solid rgba(92, 26, 38, 0.25);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.is-active {
+  background: var(--burgundy);
+  color: var(--paper);
+  border-color: var(--burgundy);
+}
+
+/* Guest card list */
+.guest-list {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.guest-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 1rem;
+  background: var(--cream);
+  padding: 1.1rem 1.4rem;
+  box-shadow: var(--shadow-tight);
+  border-left: 4px solid var(--silver);
+  transition: box-shadow 0.2s ease;
+}
+
+.guest-card:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+.guest-card[data-rsvp="accepted"] {
+  border-left-color: var(--cherry);
+}
+.guest-card[data-rsvp="declined"] {
+  border-left-color: var(--brown);
+  opacity: 0.7;
+}
+
+.guest-card__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.guest-card__meta {
+  font-family: var(--font-type);
+  font-size: 0.7rem;
+  color: var(--brown);
+  margin-top: 0.2rem;
+}
+.guest-card__checkedin {
+  font-family: var(--font-hand);
+  font-size: 1.05rem;
+  color: var(--cherry);
+}
+
+/* QR code panel */
+.qr-panel {
+  max-width: 760px;
+  margin: 3.5rem auto 0;
+}
+
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1.2rem;
+}
+
+.qr-card {
+  background: var(--cream);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-tight);
+  transform: rotate(-1deg);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.qr-card:nth-child(even) {
+  transform: rotate(1deg);
+}
+.qr-card:hover {
+  transform: rotate(0) scale(1.04);
+  box-shadow: var(--shadow-soft);
+}
+
+.qr-card canvas {
+  margin: 0 auto;
+}
+.qr-card__name {
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  color: var(--burgundy);
+  margin-top: 0.5rem;
+}
+.qr-card__rsvp {
+  margin-top: 0.3rem;
+}
+.qr-card__link {
+  font-family: var(--font-type);
+  font-size: 0.55rem;
+  color: var(--brown);
+  word-break: break-all;
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   17. DECORATION SYSTEM (used by assets/components/decorations.js)
+   ============================================================ */
+
+/* Washi tape */
+.deco-tape {
+  height: 30px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(227, 175, 192, 0.75) 0 8px,
+    rgba(227, 175, 192, 0.55) 8px 16px
+  );
+  opacity: 0.85;
+  box-shadow: var(--shadow-tight);
+  transform: rotate(var(--rot, 0deg));
+}
+
+.deco-tape::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.25);
+}
+.deco-tape--silver {
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(201, 201, 198, 0.7) 0 8px,
+    rgba(201, 201, 198, 0.5) 8px 16px
+  );
+}
+.deco-tape--cherry {
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(176, 39, 59, 0.4) 0 8px,
+    rgba(176, 39, 59, 0.22) 8px 16px
+  );
+}
+
+/* Torn paper edge */
+.deco-torn {
+  position: relative;
+  height: 18px;
+  width: 100%;
+}
+
+.deco-torn--top {
+  clip-path: polygon(
+    0% 100%,
+    4% 40%,
+    9% 90%,
+    14% 30%,
+    20% 80%,
+    26% 20%,
+    32% 70%,
+    39% 15%,
+    46% 75%,
+    53% 25%,
+    60% 85%,
+    67% 20%,
+    74% 70%,
+    81% 10%,
+    88% 80%,
+    94% 30%,
+    100% 100%
+  );
+  background: var(--cream);
+}
+
+.deco-torn--bottom {
+  clip-path: polygon(
+    0% 0%,
+    4% 60%,
+    9% 10%,
+    14% 70%,
+    20% 20%,
+    26% 80%,
+    32% 30%,
+    39% 85%,
+    46% 25%,
+    53% 75%,
+    60% 15%,
+    67% 80%,
+    74% 30%,
+    81% 90%,
+    88% 20%,
+    94% 70%,
+    100% 0%
+  );
+  background: var(--cream);
+}
+
+/* Rubber stamp */
+.deco-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(var(--rot, 0deg));
+  opacity: 0.85;
+}
+
+.deco-stamp--cherry {
+  color: var(--cherry);
+}
+.deco-stamp--ink {
+  color: var(--ink);
+}
+.deco-stamp--brown {
+  color: var(--brown);
+}
+
+/* Doodle wrapper */
+.deco-doodle {
+  color: var(--brown);
+  display: inline-block;
+  transform: rotate(var(--rot, 0deg));
+  opacity: 0.8;
+}
+
+/* Coffee stain */
+.deco-stain {
+  border-radius: 50%;
+  border: 3px solid rgba(124, 101, 82, 0.25);
+  background: radial-gradient(
+    circle,
+    transparent 55%,
+    rgba(124, 101, 82, 0.08) 60%,
+    transparent 66%
+  );
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Sparkle */
+.deco-sparkle {
+  display: inline-block;
+  color: var(--dusty-pink);
+  font-size: 1.2rem;
+  transform: rotate(var(--rot, 0deg));
+}
+
+/* Bow */
+.deco-bow {
+  display: inline-block;
+  transform: rotate(var(--rot, 0deg));
+  filter: drop-shadow(0 4px 6px rgba(42, 35, 32, 0.15));
+}
+
+/* Paperclip */
+.deco-clip {
+  width: 16px;
+  height: 34px;
+  border: 3px solid var(--silver);
+  border-radius: 8px;
+  position: relative;
+  transform: rotate(var(--rot, 0deg));
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.deco-clip::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 8px;
+  border: 3px solid var(--silver);
+  border-radius: 6px;
+}
+
+/* Page-fold corner */
+.deco-fold {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.deco-fold--br {
+  bottom: 0;
+  right: 0;
+  border-width: 0 0 22px 22px;
+  border-color: transparent transparent var(--paper-dark) transparent;
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.08);
+}
+.deco-fold--tr {
+  top: 0;
+  right: 0;
+  border-width: 0 22px 22px 0;
+  border-color: transparent var(--paper-dark) transparent transparent;
+  box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   18. RESPONSIVE
+   ============================================================ */
+@media (max-width: 720px) {
+  /* Gallery collapses to 2-column grid */
+  .memories-collage {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .p1,
+  .p2,
+  .p3,
+  .p4,
+  .p5,
+  .p6 {
+    grid-column: auto;
+    margin-top: 0;
+  }
+
+  /* Hide some hero stickers on narrow screens */
+  .sticker--stamp {
+    display: none;
+  }
+  .sticker--bow {
+    bottom: 6%;
+    right: 4%;
+  }
+  .sticker--cherry {
+    right: 6%;
+  }
+
+  /* Card rows slightly smaller */
+  .card__row {
+    font-size: 0.82rem;
+  }
+
+  /* Postcard full-bleed padding on mobile */
+  .postcard {
+    padding: 2.2rem 1.4rem 2rem;
+    transform: none;
+  }
+
+  /* Admin guest cards stack */
+  .guest-card {
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Countdown cells tighter */
+  .countdown-grid {
+    gap: 0.5rem;
+  }
+  .countdown-cell {
+    padding: 0.9rem 0.2rem 0.8rem;
+  }
+
+  /* Slightly smaller ransom headline */
+  .rletter {
+    font-size: clamp(2rem, 10vw, 4rem);
+  }
+
+  /* RSVP options full width */
+  .rsvp-options {
+    gap: 0.5rem;
+  }
+
+  /* Check-in card zero rotation on very small screens */
+  .checkin-card {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   19. REDUCED-MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep reveal sections visible immediately */
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   20. PRINT
+   ============================================================ */
+@media print {
+  /* Remove animated / decorative elements that don't print well */
+  .grain,
+  .sticker,
+  .tape,
+  .scrollcue,
+  .sticker-inline {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Ensure sections aren't cut mid-card */
+  .card,
+  .postcard,
+  .countdown-page,
+  .checkin-card,
+  .guest-card {
+    break-inside: avoid;
+  }
+}

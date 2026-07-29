@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="You're invited to Ani's birthday party — Monday, August 3. RSVP inside."
+    />
+    <meta name="theme-color" content="#5A1B28" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>You're Invited — Ani's Birthday</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Caveat:wght@500;600;700&family=Special+Elite&family=Anton&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Film-grain texture overlay -->
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- ============================================================
+     HERO
+     ============================================================ -->
+    <section class="hero" id="hero" aria-label="Invitation hero">
+      <!-- Washi tape strips -->
+      <div class="tape tape--1" aria-hidden="true"></div>
+      <div class="tape tape--2" aria-hidden="true"></div>
+
+      <!-- Hanging disco ball -->
+      <div class="sticker sticker--disco" id="discoBall" aria-hidden="true">
+        <div class="disco-ball">
+          <div class="disco-ball__facets"></div>
+          <div class="disco-ball__shine"></div>
+        </div>
+        <div class="disco-string"></div>
+      </div>
+
+      <!-- Floating cherry sticker -->
+      <div
+        class="sticker sticker--cherry sticker--float"
+        style="--delay: 0.2s"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 100 100" width="56" height="56" focusable="false">
+          <path
+            d="M60 10 C 55 30, 40 35, 35 55"
+            stroke="#5A1B28"
+            stroke-width="4"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <circle cx="30" cy="68" r="18" fill="#B0273B" />
+          <circle cx="58" cy="72" r="15" fill="#8f1c2c" />
+          <ellipse cx="25" cy="60" rx="5" ry="3" fill="#e88a9a" opacity=".7" />
+        </svg>
+      </div>
+
+      <!-- Floating bow sticker -->
+      <div
+        class="sticker sticker--bow sticker--float"
+        style="--delay: 0.6s"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 120 80" width="70" height="46" focusable="false">
+          <path
+            d="M60 40 C40 10 5 15 5 40 C5 65 40 70 60 40Z"
+            fill="#E3AFC0"
+            stroke="#5A1B28"
+            stroke-width="2.5"
+          />
+          <path
+            d="M60 40 C80 10 115 15 115 40 C115 65 80 70 60 40Z"
+            fill="#E3AFC0"
+            stroke="#5A1B28"
+            stroke-width="2.5"
+          />
+          <circle
+            cx="60"
+            cy="40"
+            r="9"
+            fill="#B0273B"
+            stroke="#5A1B28"
+            stroke-width="2"
+          />
+        </svg>
+      </div>
+
+      <!-- Floating star stickers -->
+      <div
+        class="sticker sticker--star sticker--float"
+        style="--delay: 0.4s"
+        aria-hidden="true"
+      >
+        ★
+      </div>
+      <div
+        class="sticker sticker--star2 sticker--float"
+        style="--delay: 0.9s"
+        aria-hidden="true"
+      >
+        ✦
+      </div>
+      <div
+        class="sticker sticker--heart sticker--float"
+        style="--delay: 0.3s"
+        aria-hidden="true"
+      >
+        ♡
+      </div>
+
+      <!-- Postage stamp -->
+      <div class="sticker sticker--stamp" aria-hidden="true">
+        <div class="stamp">
+          <span>PAR</span><span>TY</span>
+          <div class="stamp__star">★</div>
+        </div>
+      </div>
+
+      <!-- Main hero content -->
+      <div class="hero__inner">
+        <p class="eyebrow eyebrow--hero">est. this year · one night only</p>
+
+        <!-- Ransom-note headline — letters built by assets/js/script.js -->
+        <h1 class="ransom" id="ransomTitle" aria-label="You're Invited"></h1>
+
+        <!-- Portrait / photo frame -->
+        <div class="portrait-frame" id="portraitFrame" aria-hidden="true">
+          <div class="portrait-frame__inner">
+            <img
+              src="assets/images/Birthday-Party-Invitation.png"
+              alt="Ani's Birthday Party Invitation"
+              loading="eager"
+            />
+          </div>
+          <div class="portrait-frame__corner tl"></div>
+          <div class="portrait-frame__corner br"></div>
+          <div class="washi washi--frame"></div>
+        </div>
+
+        <p class="hero__subtitle">Ani's Birthday</p>
+        <p class="hero__hand">come as you are, leave as confetti ✿</p>
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="scrollcue" aria-hidden="true">
+        <span>scroll for the envelope</span>
+        <div class="scrollcue__line"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+     ENVELOPE
+     ============================================================ -->
+    <section
+      class="envelope-section reveal"
+      id="envelope-section"
+      aria-label="Opening envelope"
+    >
+      <p class="eyebrow">tap to open</p>
+      <h2 class="section-title">A little something for you</h2>
+
+      <div class="envelope-wrap">
+        <div
+          class="envelope"
+          id="envelope"
+          role="button"
+          tabindex="0"
+          aria-label="Open the invitation envelope"
+          aria-pressed="false"
+        >
+          <div class="envelope__back"></div>
+
+          <!-- Invitation card — rises out when envelope opens -->
+          <div class="card" id="invitationCard" aria-live="polite">
+            <div class="card__tape" aria-hidden="true"></div>
+            <p class="card__kicker">save the date</p>
+            <h3 class="card__title">You're Invited!</h3>
+            <div class="card__row">
+              <span class="card__label">Date</span>
+              <span class="card__value" id="cardDate"
+                >Monday, August&nbsp;3</span
+              >
+            </div>
+            <div class="card__row">
+              <span class="card__label">Time</span>
+              <span class="card__value">7:00&nbsp;pm — late</span>
+            </div>
+            <div class="card__row">
+              <span class="card__label">Location</span>
+              <span class="card__value">9 Alio Mirtskhulava St, Tbilisi</span>
+            </div>
+            <!-- <div class="card__row"><span class="card__label">Dress Code</span><span class="card__value">Sequins &amp; Sentiment</span></div> -->
+            <div class="card__row card__row--rsvp">
+              <span class="card__label">RSVP by</span
+              ><span class="card__value">August&nbsp;2</span>
+            </div>
+            <p class="card__ps">p.s. bring your dancing shoes ♡</p>
+          </div>
+
+          <div class="envelope__flap" aria-hidden="true"></div>
+          <div class="envelope__left" aria-hidden="true"></div>
+          <div class="envelope__right" aria-hidden="true"></div>
+          <div class="envelope__front" aria-hidden="true"></div>
+
+          <div class="envelope__seal" id="envelopeSeal" aria-hidden="true">
+            <span>open me</span>
+          </div>
+        </div>
+
+        <!-- Confetti canvas — fixed, full-screen, pointer-events: none -->
+        <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+      </div>
+    </section>
+
+    <!-- ============================================================
+     COUNTDOWN
+     ============================================================ -->
+    <section
+      class="countdown-section reveal"
+      aria-label="Countdown to the party"
+    >
+      <div class="tape tape--3" aria-hidden="true"></div>
+      <p class="eyebrow">the countdown is on</p>
+      <h2 class="section-title">Until the confetti drops</h2>
+
+      <div
+        class="countdown-page"
+        role="timer"
+        aria-label="Time remaining until Ani's birthday party"
+      >
+        <!-- Spiral binding holes -->
+        <div class="countdown-page__spiral" aria-hidden="true">
+          <span></span><span></span><span></span><span></span> <span></span
+          ><span></span><span></span><span></span>
+        </div>
+
+        <div class="countdown-page__month" aria-hidden="true">August</div>
+
+        <div class="countdown-grid" id="countdownGrid">
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-days" aria-label="days">00</span>
+            <span class="countdown-label" aria-hidden="true">days</span>
+          </div>
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-hours" aria-label="hours"
+              >00</span
+            >
+            <span class="countdown-label" aria-hidden="true">hours</span>
+          </div>
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-mins" aria-label="minutes"
+              >00</span
+            >
+            <span class="countdown-label" aria-hidden="true">mins</span>
+          </div>
+          <div class="countdown-cell">
+            <span class="countdown-num" id="cd-secs" aria-label="seconds"
+              >00</span
+            >
+            <span class="countdown-label" aria-hidden="true">secs</span>
+          </div>
+        </div>
+
+        <div class="countdown-page__sticker" aria-hidden="true">
+          circle it! ✦
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+     PLAYLIST / CASSETTE
+     ============================================================ -->
+    <section
+      class="playlist-section reveal"
+      aria-label="Birthday mixtape playlist"
+    >
+      <div class="tape tape--4" aria-hidden="true"></div>
+      <p class="eyebrow">set the mood</p>
+      <h2 class="section-title">The birthday mixtape</h2>
+
+      <!-- Visual cassette — animates when a track is playing -->
+      <div class="cassette" id="cassette" aria-hidden="true">
+        <div class="cassette__body">
+          <div class="cassette__label">
+            <span class="cassette__label-title">ANI'S MIX</span>
+            <span class="cassette__label-sub">side A · 2026</span>
+          </div>
+          <div class="cassette__reels">
+            <div class="reel" id="reelLeft"><div class="reel__hub"></div></div>
+            <div class="reel" id="reelRight"><div class="reel__hub"></div></div>
+          </div>
+          <div class="cassette__screws" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Track list -->
+      <ul class="tracklist" id="tracklist" aria-label="Playlist tracks">
+        <li class="track" data-track="0">
+          <span class="track__num" aria-hidden="true">01</span>
+          <span class="track__name">Dancing Queen</span>
+          <span class="track__time" aria-label="3 minutes 52 seconds"
+            >3:52</span
+          >
+          <button class="track__play" aria-label="Play Dancing Queen">▶</button>
+          <audio
+            class="track__audio"
+            src="assets/audio/ABBA - Dancing Queen.mp3"
+          ></audio>
+        </li>
+        <li class="track" data-track="1">
+          <span class="track__num" aria-hidden="true">02</span>
+          <span class="track__name">Adventure Of A Lifetime</span>
+          <span class="track__time" aria-label="4 minutes 24 seconds"
+            >4:24</span
+          >
+          <button class="track__play" aria-label="Play Adventure Of A Lifetime">
+            ▶
+          </button>
+          <audio
+            class="track__audio"
+            src="assets/audio/Coldplay - Adventure Of A Lifetime.mp3"
+          ></audio>
+        </li>
+        <li class="track" data-track="2">
+          <span class="track__num" aria-hidden="true">03</span>
+          <span class="track__name">All Too Well</span>
+          <span class="track__time" aria-label="3 minutes 55 seconds"
+            >3:55</span
+          >
+          <button class="track__play" aria-label="Play All Too Well">▶</button>
+          <audio
+            class="track__audio"
+            src="assets/audio/Taylor Swift - All Too Well.mp3"
+          ></audio>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+     RSVP
+     ============================================================ -->
+    <section class="rsvp-section reveal" aria-label="RSVP form">
+      <p class="eyebrow">last thing, promise</p>
+      <h2 class="section-title">Will you be there?</h2>
+
+      <form
+        class="postcard"
+        id="rsvpForm"
+        novalidate
+        aria-label="Send your RSVP"
+      >
+        <!-- Decorative postage stamp -->
+        <div class="postcard__stamp" aria-hidden="true">
+          <div class="stamp stamp--sm">
+            <span>RSVP</span>
+            <div class="stamp__star">✦</div>
+          </div>
+        </div>
+
+        <!-- Perforated top edge -->
+        <div class="postcard__perf" aria-hidden="true"></div>
+
+        <!-- Name field -->
+        <label class="field" for="rsvpName">
+          <span class="field__label">your name</span>
+          <input
+            type="text"
+            name="name"
+            id="rsvpName"
+            placeholder="Jane Doe"
+            autocomplete="name"
+            required
+            aria-required="true"
+          />
+        </label>
+
+        <!-- Attendance choice -->
+        <fieldset style="border: none; padding: 0; margin: 0 0 1.4rem">
+          <legend class="field__label field__label--standalone">
+            will you come?
+          </legend>
+          <div class="rsvp-options" role="group" aria-label="RSVP options">
+            <button
+              type="button"
+              class="rsvp-sticker rsvp-sticker--yes"
+              data-value="yes"
+              aria-pressed="false"
+            >
+              yes! ♡
+            </button>
+            <button
+              type="button"
+              class="rsvp-sticker rsvp-sticker--no"
+              data-value="no"
+              aria-pressed="false"
+            >
+              can't make it
+            </button>
+            <button
+              type="button"
+              class="rsvp-sticker rsvp-sticker--maybe"
+              data-value="maybe"
+              aria-pressed="false"
+            >
+              maybe ✦
+            </button>
+          </div>
+        </fieldset>
+
+        <!-- Hidden field carries the selected answer to the submit handler -->
+        <input type="hidden" name="answer" id="rsvpAnswer" />
+
+        <button type="submit" class="postcard__submit">send it off ✉</button>
+
+        <!-- Confirmation — revealed after successful submit -->
+        <div
+          class="postcard__confirm"
+          id="rsvpConfirm"
+          role="alert"
+          aria-live="polite"
+        >
+          <span class="confirm__check" aria-hidden="true">✓</span>
+          <p>
+            got it, <span id="confirmName">friend</span>!
+            <span id="confirmMsg"></span>
+          </p>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============================================================
+     FOOTER
+     ============================================================ -->
+    <footer class="footer">
+      <div class="sticker sticker--disco sticker--small" aria-hidden="true">
+        <div class="disco-ball">
+          <div class="disco-ball__facets"></div>
+          <div class="disco-ball__shine"></div>
+        </div>
+      </div>
+      <p class="footer__hand">Can't wait to celebrate with you</p>
+      <p class="footer__heart" aria-hidden="true">♡</p>
+    </footer>
+
+    <!-- Scripts — config and api first, then components, then page logic -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/components/decorations.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>

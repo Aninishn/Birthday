@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Private guest list dashboard — Ani's Birthday.">
+  <meta name="theme-color" content="#5A1B28">
+  <title>Guest List — Ani's Birthday</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,500&family=Caveat:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Shared styles (one level up from admin/) -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<!-- Film-grain texture overlay -->
+<div class="grain" aria-hidden="true"></div>
+
+<main class="admin-page">
+
+  <!-- ============================================================
+       GATE — password prompt, shown by default
+       ============================================================ -->
+  <div class="admin-gate" id="adminGate" role="form" aria-label="Admin login">
+    <p class="eyebrow">private page</p>
+    <p class="admin-gate__prompt">enter the key to see your guest list</p>
+
+    <label for="adminKeyInput" class="field__label" style="display:block; margin-bottom:.3rem;">
+      admin key
+    </label>
+    <input
+      type="password"
+      id="adminKeyInput"
+      name="adminKey"
+      placeholder="••••••••"
+      autocomplete="current-password"
+      aria-describedby="adminGateError"
+    >
+
+    <button
+      class="postcard__submit"
+      id="adminGateBtn"
+      style="max-width:200px; margin:.8rem auto 0; display:block;"
+    >
+      unlock
+    </button>
+
+    <p
+      class="checkin-error"
+      id="adminGateError"
+      role="alert"
+      style="display:none; margin-top:.8rem;"
+    ></p>
+  </div>
+
+
+  <!-- ============================================================
+       DASHBOARD — revealed after successful unlock
+       ============================================================ -->
+  <div id="adminDashboard" style="display:none;">
+
+    <!-- Header -->
+    <header class="admin-header">
+      <p class="eyebrow">private · just for you</p>
+      <h1 class="section-title">The Guest List</h1>
+    </header>
+
+    <!-- Summary stat cards -->
+    <div class="admin-summary" id="adminSummary" aria-label="Guest statistics"></div>
+
+    <!-- Filter toolbar -->
+    <div class="admin-filters" role="group" aria-label="Filter guests by RSVP status">
+      <button class="filter-btn is-active" data-filter="all"      id="filterAll">All</button>
+      <button class="filter-btn"           data-filter="accepted" id="filterAccepted">Accepted</button>
+      <button class="filter-btn"           data-filter="declined" id="filterDeclined">Declined</button>
+      <button class="filter-btn"           data-filter="pending"  id="filterPending">Pending</button>
+    </div>
+
+    <!-- Guest card list -->
+    <section aria-label="Guest cards">
+      <div class="guest-list" id="guestList"></div>
+    </section>
+
+    <!-- QR code panel -->
+    <section class="qr-panel" aria-label="Check-in QR codes">
+      <h2 class="section-title" style="font-size:1.4rem;">Check-in QR codes</h2>
+      <div class="qr-grid" id="qrGrid"></div>
+    </section>
+
+  </div><!-- /adminDashboard -->
+
+</main>
+
+
+<!-- QR library (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+<!-- Scripts — paths relative to admin/ folder -->
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/components/decorations.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
