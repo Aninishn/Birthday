@@ -42,6 +42,41 @@
   });
 })();
 
+/* ============================================================
+   IMAGE LIGHTBOX
+   ============================================================ */
+(function imageLightbox() {
+  const frame = document.getElementById("portraitFrame");
+  const modal = document.getElementById("imageModal");
+  const close = document.querySelector(".image-modal__close");
+
+  if (!frame || !modal) return;
+
+  frame.addEventListener("click", () => {
+    modal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  });
+
+  close.addEventListener("click", () => {
+    modal.classList.remove("is-open");
+    document.body.style.overflow = "";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("is-open");
+      document.body.style.overflow = "";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.classList.remove("is-open");
+      document.body.style.overflow = "";
+    }
+  });
+})();
+
 /* ==============================================================
    2. SCROLL REVEAL
    --------------------------------------------------------------
