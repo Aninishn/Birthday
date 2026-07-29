@@ -1,29 +1,3 @@
-/* ==============================================================
-   STYLE.CSS — Ani's Birthday Scrapbook Invitation
-   --------------------------------------------------------------
-   Table of Contents
-   1.  Design Tokens
-   2.  Reset & Base
-   3.  Shared — eyebrow / section-title / reveal
-   4.  Shared — tape strips
-   5.  Shared — stickers & decorative elements
-   6.  Shared — disco ball
-   7.  Shared — postage stamp
-   8.  Hero
-   9.  Envelope
-   10. Countdown
-   11. Memories / Gallery
-   12. Playlist / Cassette
-   13. RSVP Postcard
-   14. Footer
-   15. Check-in Page
-   16. Admin Dashboard
-   17. Decoration System (used by decorations.js)
-   18. Responsive
-   19. Reduced-Motion
-   20. Print
-   ============================================================== */
-
 /* ============================================================
    1. DESIGN TOKENS
    ============================================================ */
@@ -870,7 +844,7 @@ ul {
   pointer-events: none;
 }
 .envelope.is-open .card {
-  transform: translateY(-75%);
+  transform: translateY(-55%);
   z-index: 7;
 }
 
@@ -2024,6 +1998,28 @@ ul {
   /* Check-in card zero rotation on very small screens */
   .checkin-card {
     transform: none;
+  }
+
+  .envelope-wrap {
+    width: 92vw;
+  }
+
+  .envelope {
+    aspect-ratio: 16 / 11;
+  }
+
+  .envelope__flap {
+    height: 75%;
+  }
+
+  .envelope.is-open .card {
+    transform: translateY(-45%);
+  }
+
+  .envelope__seal {
+    width: 62px;
+    height: 62px;
+    font-size: 0.9rem;
   }
 }
 

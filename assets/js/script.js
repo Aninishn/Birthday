@@ -279,11 +279,30 @@
    ============================================================== */
 (function playlist() {
   console.log("playlist loaded");
+
   const cassette = document.getElementById("cassette");
   const tracks = document.querySelectorAll(".track");
+
   if (!cassette || !tracks.length) return;
 
   let currentAudio = null;
+
+  function playIcon() {
+    return `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="7,5 19,12 7,19"></polygon>
+      </svg>
+    `;
+  }
+
+  function pauseIcon() {
+    return `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="6" y="5" width="4" height="14"></rect>
+        <rect x="14" y="5" width="4" height="14"></rect>
+      </svg>
+    `;
+  }
 
   tracks.forEach((track) => {
     const btn = track.querySelector(".track__play");
@@ -299,12 +318,7 @@
         t.classList.remove("is-active");
         const b = t.querySelector(".track__play");
         const a = t.querySelector(".track__audio");
-        if (b)
-          b.innerHTML = `
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <polygon points="7,5 19,12 7,19"></polygon>
-  </svg>
-`;
+        if (b) b.innerHTML = playIcon();
         if (b) b.setAttribute("aria-label", "Play");
         if (a) {
           a.pause();
@@ -320,12 +334,7 @@
       }
       // Activate this track
       track.classList.add("is-active");
-      btn.innerHTML = `
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <rect x="6" y="5" width="4" height="14"></rect>
-    <rect x="14" y="5" width="4" height="14"></rect>
-  </svg>
-`;
+      btn.innerHTML = pauseIcon();
       btn.setAttribute("aria-label", "Pause");
 
       audio.play();
@@ -336,7 +345,8 @@
 
       audio.addEventListener("ended", () => {
         track.classList.remove("is-active");
-        btn.textContent = "▶";
+        btn.innerHTML = playIcon();
+        btn.setAttribute("aria-label", "Play");
         cassette.classList.remove("is-playing");
       });
     });
