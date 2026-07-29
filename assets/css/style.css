@@ -2019,7 +2019,7 @@ ul {
   }
 
   .envelope.is-open .card {
-    transform: translateY(-25%);
+    transform: translateY(-15%);
     opacity: 1;
     visibility: visible;
     z-index: 7;
