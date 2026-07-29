@@ -331,8 +331,6 @@
     Pending: "maybe",
   };
 
-  const guestId = new URLSearchParams(window.location.search).get("guest");
-
   /* ---- Sticker selection ---- */
   stickers.forEach((sticker) => {
     sticker.addEventListener("click", () => {
@@ -345,32 +343,6 @@
       if (hiddenAnswer) hiddenAnswer.value = sticker.dataset.value;
     });
   });
-
-  /* ---- Pre-fill from Sheet if this is a personalised link ---- */
-  if (guestId && window.ScrapbookAPI) {
-    ScrapbookAPI.getGuest(guestId)
-      .then((guest) => {
-        if (!guest || guest.error) return;
-
-        if (guest.Name && nameInput) {
-          nameInput.value = guest.Name;
-          nameInput.readOnly = true;
-        }
-
-        const preselect = FROM_SHEET_VALUE[guest.RSVP];
-        if (preselect) {
-          stickers.forEach((s) => {
-            const match = s.dataset.value === preselect;
-            s.classList.toggle("is-selected", match);
-            s.setAttribute("aria-pressed", match ? "true" : "false");
-          });
-          if (hiddenAnswer) hiddenAnswer.value = preselect;
-        }
-      })
-      .catch(() => {
-        /* Network error — fall back to local-only form */
-      });
-  }
 
   /* ---- Form submit ---- */
   form.addEventListener("submit", (e) => {
