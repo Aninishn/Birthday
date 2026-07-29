@@ -2013,16 +2013,37 @@ ul {
   }
 
   .card {
-    transform: translateY(-10%);
+    left: 8%;
+    right: 8%;
+    bottom: -5%;
+    padding: 1.2rem 1rem;
     opacity: 0;
     visibility: hidden;
+    transform: translateY(0);
   }
 
   .envelope.is-open .card {
-    transform: translateY(-15%);
+    transform: translateY(-10%);
     opacity: 1;
     visibility: visible;
     z-index: 7;
+  }
+
+  .card__title {
+    font-size: 1.3rem;
+  }
+
+  .card__row {
+    font-size: 0.78rem;
+    padding: 0.3rem 0;
+  }
+
+  .card__label {
+    font-size: 0.6rem;
+  }
+
+  .card__ps {
+    font-size: 1rem;
   }
 
   .envelope__seal {
