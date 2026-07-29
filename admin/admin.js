@@ -1,18 +1,3 @@
-/* ==============================================================
-   ADMIN.JS — Guest List Dashboard
-   --------------------------------------------------------------
-   Handles:
-   - Admin key gate (client-side UI hide; real auth is in Code.gs)
-   - Guest card rendering with RSVP badges
-   - Filter buttons (All / Accepted / Declined / Pending)
-   - Summary stat cards
-   - QR code generation per guest (uses qrcode.js from CDN)
-
-   Depends on:
-   - window.SCRAPBOOK_CONFIG  (../assets/js/config.js)
-   - window.ScrapbookAPI      (../assets/js/api.js)
-   - window.QRCode            (CDN — qrcode.min.js)
-   ============================================================== */
 (function () {
   /* ---- DOM references ---- */
   const gateEl = document.getElementById("adminGate");
@@ -135,7 +120,11 @@
 
   async function loadDashboard() {
     try {
-      const guests = await ScrapbookAPI.listGuests(keyInput.value);
+      console.log("summary:", summaryEl);
+      console.log("guestList:", guestListEl);
+
+      const guests = await ScrapbookAPI.listGuests();
+      // const guests = await ScrapbookAPI.listGuests(keyInput.value);
 
       if (!Array.isArray(guests)) {
         throw new Error(
