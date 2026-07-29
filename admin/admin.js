@@ -22,7 +22,6 @@
   const gateError = document.getElementById("adminGateError");
   const summaryEl = document.getElementById("adminSummary");
   const guestListEl = document.getElementById("guestList");
-  const qrGrid = document.getElementById("qrGrid");
 
   const cfg = window.SCRAPBOOK_CONFIG || {};
 
@@ -112,56 +111,6 @@
   }
 
   /* ============================================================
-     RENDERING — QR codes
-     ============================================================ */
-
-  /**
-   * Build a QR card DOM node for a guest.
-   * Check-in links now point to /checkin/ (index.html served from directory).
-   * @param {Object} guest - Guest record from the Sheet.
-   * @returns {HTMLElement}
-   */
-  function renderQrCard(guest) {
-    const link = `${cfg.SITE_URL || ""}/checkin/?guest=${encodeURIComponent(guest.GuestID)}`;
-    const rsvp = (guest.RSVP || "Pending").toLowerCase();
-
-    const wrap = document.createElement("article");
-    wrap.className = "qr-card";
-    wrap.setAttribute(
-      "aria-label",
-      `QR code for ${guest.Name || guest.GuestID}`,
-    );
-
-    const canvas = document.createElement("canvas");
-    wrap.appendChild(canvas);
-
-    const nameEl = document.createElement("p");
-    nameEl.className = "qr-card__name";
-    nameEl.textContent = guest.Name || guest.GuestID;
-    wrap.appendChild(nameEl);
-
-    const badgeEl = document.createElement("p");
-    badgeEl.className = "qr-card__rsvp";
-    badgeEl.innerHTML = `<span class="checkin-status checkin-status--${rsvp}">${guest.RSVP || "Pending"}</span>`;
-    wrap.appendChild(badgeEl);
-
-    const linkEl = document.createElement("p");
-    linkEl.className = "qr-card__link";
-    linkEl.textContent = link;
-    wrap.appendChild(linkEl);
-
-    if (window.QRCode) {
-      QRCode.toCanvas(canvas, link, {
-        width: 130,
-        margin: 1,
-        color: { dark: "#2A2320", light: "#FBF6EC" },
-      });
-    }
-
-    return wrap;
-  }
-
-  /* ============================================================
      FILTER BUTTONS
      ============================================================ */
 
@@ -199,10 +148,6 @@
       renderSummary(guests);
       renderGuestList("all");
       setupFilters();
-
-      // Build QR cards
-      qrGrid.innerHTML = "";
-      guests.forEach((g) => qrGrid.appendChild(renderQrCard(g)));
 
       // Hide gate, show dashboard
       gateEl.style.display = "none";
