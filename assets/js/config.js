@@ -12,10 +12,11 @@
    private one-day event; don't use for anything sensitive.
    ============================================================== */
 window.SCRAPBOOK_CONFIG = {
-  APPS_SCRIPT_URL: "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE",
-  ADMIN_KEY: "aniBirthday2026",
+  APPS_SCRIPT_URL:
+    "https://script.google.com/macros/s/AKfycbxcI_HC77LtO1299C3X8CrwwIVd7bMaDhCVHbLwLWpHAfP4n5MEneESEdyXarQW1vmY/exec",
+  ADMIN_KEY: "AniBirthday2026",
 
   // Base URL where this site is hosted — used to build the
   // check-in QR links shown on the admin page. No trailing slash.
-  SITE_URL: "https://your-site.example.com",
+  SITE_URL: "https://aninishn.github.io/Birthday",
 };

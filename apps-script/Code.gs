@@ -35,7 +35,7 @@
  * (the admin page generates these + the QR images for you)
  */
 
-var ADMIN_KEY = 'CHANGE_ME_SECRET';
+var ADMIN_KEY = 'AniBirthday2026';
 var SHEET_NAME = 'Guests';
 
 function doGet(e) {
