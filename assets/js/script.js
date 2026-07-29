@@ -46,13 +46,13 @@
    IMAGE LIGHTBOX
    ============================================================ */
 (function imageLightbox() {
-  const frame = document.getElementById("portraitFrame");
+  const image = document.getElementById("invitationImage");
   const modal = document.getElementById("imageModal");
-  const close = document.querySelector(".image-modal__close");
+  const close = document.getElementById("closeModal");
 
-  if (!frame || !modal) return;
+  if (!image || !modal || !close) return;
 
-  frame.addEventListener("click", () => {
+  image.addEventListener("click", () => {
     modal.classList.add("is-open");
     document.body.style.overflow = "hidden";
   });

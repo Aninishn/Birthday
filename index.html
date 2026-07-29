@@ -132,9 +132,10 @@
         <h1 class="ransom" id="ransomTitle" aria-label="You're Invited"></h1>
 
         <!-- Portrait / photo frame -->
-        <div class="portrait-frame" id="portraitFrame" aria-hidden="true">
+        <div class="portrait-frame" id="portraitFrame">
           <div class="portrait-frame__inner">
             <img
+              id="invitationImage"
               src="assets/images/Birthday-Party-Invitation.png"
               alt="Ani's Birthday Party Invitation"
               loading="eager"
@@ -147,11 +148,11 @@
 
         <!-- Image Lightbox -->
         <div class="image-modal" id="imageModal">
-          <button class="image-modal__close" aria-label="Close">×</button>
+          <button class="image-modal__close" id="closeModal" aria-label="Close">×</button>
           <img
             src="assets/images/Birthday-Party-Invitation.png"
-            alt="Ani's Birthday Party Invitation"
-            class="image-modal__image"
+            alt="Ani's Birthday Party Invitation large view"
+            class="image-modal__img"
           />
         </div>
 
