@@ -400,44 +400,41 @@
   });
 
   /* ---- Form submit ---- */
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const name = nameInput.value.trim();
-    const answer = hiddenAnswer.value;
+    const name = nameInput ? nameInput.value.trim() : "";
+    const answer = hiddenAnswer ? hiddenAnswer.value : "";
 
-    // Stop empty name
-    if (name.length === 0) {
+    // Require name
+    if (!name) {
       alert("Please enter your name ♡");
       nameInput.focus();
-      return false;
+      return;
     }
 
-    // Stop empty RSVP choice
+    // Require RSVP choice
     if (!answer) {
-      alert("Please choose an RSVP option ♡");
-      return false;
+      alert("Please choose if you will come ♡");
+      return;
     }
 
-    // Show confirmation
+    /* Show confirmation */
     if (confirmEl) {
-      confirmName.textContent = name;
-      confirmMsg.textContent = MESSAGES[answer];
+      if (confirmName) confirmName.textContent = name;
+      if (confirmMsg) confirmMsg.textContent = MESSAGES[answer];
       confirmEl.classList.add("is-visible");
     }
 
-    // Save to Google Sheet
+    /* Save to Google Sheet */
     if (window.ScrapbookAPI) {
-      try {
-        const data = await ScrapbookAPI.submitRsvp(
-          name,
-          TO_SHEET_VALUE[answer],
-        );
-
-        console.log("RSVP saved:", data);
-      } catch (err) {
-        console.error("RSVP error:", err);
-      }
+      ScrapbookAPI.submitRsvp(name, TO_SHEET_VALUE[answer])
+        .then((data) => {
+          console.log("RSVP saved:", data);
+        })
+        .catch((err) => {
+          console.error("RSVP error:", err);
+        });
     }
   });
 })();
