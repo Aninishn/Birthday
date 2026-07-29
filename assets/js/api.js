@@ -41,8 +41,11 @@
   /** Public API surface */
   global.ScrapbookAPI = {
     /** List all guests — requires a valid admin key. */
-    listGuests() {
-      return call({ action: "list", key: cfg.ADMIN_KEY });
+    listGuests(key) {
+      return call({
+        action: "list",
+        key: key || cfg.ADMIN_KEY,
+      });
     },
 
     /** Submit a new RSVP from any visitor. */
