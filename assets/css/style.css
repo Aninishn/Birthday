@@ -2012,8 +2012,17 @@ ul {
     height: 75%;
   }
 
+  .card {
+    transform: translateY(-10%);
+    opacity: 0;
+    visibility: hidden;
+  }
+
   .envelope.is-open .card {
-    transform: translateY(-45%);
+    transform: translateY(-25%);
+    opacity: 1;
+    visibility: visible;
+    z-index: 7;
   }
 
   .envelope__seal {
